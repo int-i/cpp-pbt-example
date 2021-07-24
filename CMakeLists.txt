@@ -18,8 +18,7 @@ include(FetchContent)
 FetchContent_Declare(
     rapidcheck
     GIT_REPOSITORY https://github.com/emil-e/rapidcheck.git
-    GIT_TAG        33d15a858e3125f5af61a655f390f1cbc2f272ba
-)
+    GIT_TAG 33d15a858e3125f5af61a655f390f1cbc2f272ba)
 FetchContent_MakeAvailable(rapidcheck)
 
 add_subdirectory(src)
