@@ -3,42 +3,40 @@
 
 class Counter {
 public:
-    void inc() {
-        m_value++;
+    void increase() {
+        value++;
     }
 
-    void dec() {
-        assert(m_value > 0);
-        // Broken!
-        if (m_value != 10) {
-            m_value--;
+    void decrease() {
+        if (value > 0) {
+            value--;
         }
     }
 
     int get() {
-        return m_value;
+        return value;
     }
 
 private:
-    int m_value = 0;
+    int value = 0;
 };
 
 struct CounterModel {
     int value = 0;
 };
 
-struct Inc : public rc::state::Command<CounterModel, Counter> {
+struct Increase : public rc::state::Command<CounterModel, Counter> {
     void apply(CounterModel &s0) const override {
         s0.value++;
     }
 
     void run(const CounterModel &s0, Counter &counter) const override {
-        counter.inc();
+        counter.increase();
         RC_ASSERT(counter.get() == (s0.value + 1));
     }
 };
 
-struct Dec : public rc::state::Command<CounterModel, Counter> {
+struct Decrease : public rc::state::Command<CounterModel, Counter> {
     void checkPreconditions(const CounterModel &s0) const override {
         RC_PRE(s0.value > 0);
     }
@@ -48,7 +46,7 @@ struct Dec : public rc::state::Command<CounterModel, Counter> {
     }
 
     void run(const CounterModel &state, Counter &counter) const override {
-        counter.dec();
+        counter.decrease();
         RC_ASSERT(counter.get() == (state.value - 1));
     }
 };
@@ -57,8 +55,7 @@ int main() {
     rc::check([] {
         CounterModel state;
         Counter sut;
-        rc::state::check(state, sut, rc::state::gen::execOneOfWithArgs<Inc, Dec>());
+        rc::state::check(state, sut, rc::state::gen::execOneOfWithArgs<Increase, Decrease>());
     });
-
     return 0;
 }
