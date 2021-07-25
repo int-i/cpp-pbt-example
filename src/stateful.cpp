@@ -26,23 +26,23 @@ struct CounterModel {
 };
 
 struct Increase : public rc::state::Command<CounterModel, Counter> {
-    void apply(CounterModel &s0) const override {
-        s0.value++;
+    void apply(CounterModel &state) const override {
+        state.value++;
     }
 
-    void run(const CounterModel &s0, Counter &counter) const override {
+    void run(const CounterModel &state, Counter &counter) const override {
         counter.increase();
-        RC_ASSERT(counter.get() == (s0.value + 1));
+        RC_ASSERT(counter.get() == (state.value + 1));
     }
 };
 
 struct Decrease : public rc::state::Command<CounterModel, Counter> {
-    void checkPreconditions(const CounterModel &s0) const override {
-        RC_PRE(s0.value > 0);
+    void checkPreconditions(const CounterModel &state) const override {
+        RC_PRE(state.value > 0);
     }
 
-    void apply(CounterModel &s0) const override {
-        s0.value--;
+    void apply(CounterModel &state) const override {
+        state.value--;
     }
 
     void run(const CounterModel &state, Counter &counter) const override {
