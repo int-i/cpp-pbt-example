@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.11)
 project(PbtEx
         VERSION 1.0
-        DESCRIPTION "C++ Property-based Test Example (w/ RapidCheck)"
+        DESCRIPTION "C++ Property-based Testing Example (w/ RapidCheck)"
         HOMEPAGE_URL https://github.com/int-i/cpp-pbt-example
         LANGUAGES CXX)
 
